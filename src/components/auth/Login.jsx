@@ -33,15 +33,9 @@ const loginSubmit = (e) => {
             if (res.data.status === 200) {
                 localStorage.setItem('auth_token', res.data.token);
                 localStorage.setItem('auth_name', res.data.username);
+                localStorage.setItem('role', res.data.role);
                 swal("Success", res.data.message, "success");
-                if (res.data.role === 'admin') {
-                    history.push('/admin');
-                } else if (res.data.role === 'owner') {
-                    history.push('/owner');
-                } else {
-                    history.push('/');
-                }
-
+                history.push('/');
             }else if(res.data.status === 401){
                 swal("Warning", res.data.message, "warning");
             } else {
@@ -50,6 +44,7 @@ const loginSubmit = (e) => {
         });
         });
     };
+    
     return (
         <>
 

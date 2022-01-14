@@ -1,48 +1,116 @@
 import React from 'react'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 
 const Menu = () => {
     return (
         <>
-            <div className="container mx-auto">
-            <div className="grid auto-cols-4 gap-4">
-                
-                <div className="max-w-xs rounded-md overflow-hidden shadow-lg hover:scale-102 transition duration-500 cursor-pointer">
-                <div>
-                    <img src="https://media.ldlc.com/r1600/ld/products/00/05/82/02/LD0005820208_1.jpg" alt="" />
+            <div className="container pt-5">
+                <div className="row">
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">Active Users</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">Inactive Users</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">Add User</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">Add Product</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">View Products</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">Add Category</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">View Categories</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
+                    <div className="col-6 col-md-4 py-2 px-2 mx-auto my-auto">
+                        <div className="text-center bg-white shadow-xl py-3 rounded-lg">
+                        <Link to="#" className="no-underline  hover:text-zinc-600 active:text-zinc-500 text-zinc-500">
+                        <div className="p-3">
+                            <div className="icon mb-2">
+                                <i className="fas fa-power-off fa-5x"></i>
+                            </div>                            
+                           <h2 className="title-font font-medium text-xl">Sell</h2>
+                        </div>
+                        </Link>
+                        </div>                   
+                    </div>
+
                 </div>
-                <div className="py-4 px-4 bg-white">
-                    <h3 className="text-lg font-semibold text-gray-600">Apple MacBook Pro M1 13.3&quot; Silver 16GB/512GB (MYDC2FN/A-16GB)</h3>
-                    <p className="mt-4 text-lg font-thin">$ 2400</p>
-                </div>
-                </div>
-                <div className="max-w-xs rounded-md overflow-hidden shadow-md hover:scale-102 transition duration-500 cursor-pointer">
-                <div>
-                    <img src="https://media.ldlc.com/r1600/ld/products/00/05/82/02/LD0005820208_1.jpg" alt="" />
-                </div>
-                <div className="py-4 px-4 bg-white">
-                    <h3 className="text-lg font-semibold text-gray-600">Apple MacBook Pro M1 13.3&quot; Silver 16GB/512GB (MYDC2FN/A-16GB)</h3>
-                    <p className="mt-4 text-lg font-thin">$ 2400</p>
-                </div>
-                </div>
-                <div className="max-w-xs rounded-md overflow-hidden shadow-md hover:scale-102 transition duration-500 cursor-pointer">
-                <div>
-                    <img src="https://media.ldlc.com/r1600/ld/products/00/05/82/02/LD0005820208_1.jpg" alt="" />
-                </div>
-                <div className="py-4 px-4 bg-white">
-                    <h3 className="text-lg font-semibold text-gray-600">Apple MacBook Pro M1 13.3&quot; Silver 16GB/512GB (MYDC2FN/A-16GB)</h3>
-                    <p className="mt-4 text-lg font-thin">$ 2400</p>
-                </div>
-                </div>
-                <div className="max-w-xs rounded-md overflow-hidden shadow-md hover:scale-102 transition duration-500 cursor-pointer">
-                <div>
-                    <img src="https://media.ldlc.com/r1600/ld/products/00/05/82/02/LD0005820208_1.jpg" alt="" />
-                </div>
-                <div className="py-4 px-4 bg-white">
-                    <h3 className="text-lg font-semibold text-gray-600">Apple MacBook Pro M1 13.3&quot; Silver 16GB/512GB (MYDC2FN/A-16GB)</h3>
-                    <p className="mt-4 text-lg font-thin">$ 2400</p>
-                </div>
-            </div>
-            </div>
             </div>
         </>
     )

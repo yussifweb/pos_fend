@@ -4,11 +4,14 @@ import axios from 'axios';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Index from './components/Index';
-import OwnerIndex from './components/owner/OwnerIndex';
-import AdminPrivateRoutes from './AdminPrivateRoutes';
 import Page403 from './components/error/Page403';
 import Page404 from './components/error/Page404';
-import OwnerPrivateRoutes from './OwnerPrivateRoutes';
+import AddCategory from './components/category/AddCategory';
+import AddStore from './components/store/AddStore';
+import ViewCategory from './components/category/ViewCategory';
+import ViewStores from './components/store/ViewStores';
+import EditCategory from './components/category/EditCategory';
+import AddProduct from './components/products/AddProducts';
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -20,6 +23,8 @@ axios.interceptors.request.use(function (config){
   return config;
 });
 
+
+
 function App() {
   return (
     <div className="">
@@ -28,13 +33,32 @@ function App() {
           {/* <Route path="/" exact component={Home} />
           <Route path="/about" exact component={About} />
           <Route path="/contact" exact component={Contact} /> */}
-          <AdminPrivateRoutes path="/admin" name="Admin" />
-          <OwnerPrivateRoutes path="/owner" name="Owner" />
+          {/* <AdminPrivateRoutes path="/admin" name="Admin" />
+          <OwnerPrivateRoutes path="/owner" name="Owner" /> */}
+
+          <Route path="/add-store" exact component={AddStore} />
+          <Route path="/view-stores" exact component={ViewStores} />
+
+          <Route path="/add-category" exact component={AddCategory} />          
+          <Route path="/view-category" exact component={ViewCategory} />
+          <Route path="/edit-category/:id" exact component={EditCategory} />
+
+          <Route path="/add-product" exact component={AddProduct} /> 
+          
 
           {/* <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} /> */}
+          <Route path="/login">
+            {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Login />}
+          </Route>
+
+          <Route path="/register">
+            {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Register />}
+          </Route>
 
           <Route path="/" exact component={Index} />
+
+
           {/* <Route path="/owner" exact component={OwnerIndex} /> */}
           {/* <Route path="/admin" exact component={AdminIndex} /> */}
 
@@ -53,6 +77,7 @@ function App() {
 
           <Route path="/403" exact component={Page403} />
           <Route path="/404" exact component={Page404} />
+
 
           {/* <Route path="/admin" name="Admin" render={(props) => <Layout {...props} />} /> */}
         </Switch>

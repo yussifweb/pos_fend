@@ -9,12 +9,7 @@ const Layout = () => {
         <div className='sb-nav-fixed'>
             <Navbar />
 
-            <div id="layoutSidenav">
-
-            <div id="layoutSidenav_nav">
-            </div>
-
-           <div id="layoutSidenav_content">
+        
             <main>
                 <Switch>
                     {adminroutes.map((route, idx) =>{
@@ -33,8 +28,6 @@ const Layout = () => {
                 </Switch> 
             </main>
 
-        </div>  
-        </div> 
         </div>
 
     )

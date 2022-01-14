@@ -6,7 +6,8 @@ import swal from 'sweetalert';
 
 const Navbar = () => {
 
-    const history = useHistory();
+const history = useHistory();
+
     
     const logoutSubmit = (e) => {
         e.preventDefault();
@@ -30,25 +31,19 @@ const Navbar = () => {
                 <Link to="/register" className="inline-flex items-center border-0 py-1 px-4 mr-4 bg-green-500 hover:bg-green-700 focus:ring-green-500
                 focus:ring-offset-green-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md
                 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full text-base mt-4 md:mt-0">
-               <i class="fas fa-user-plus pr-1"></i>
+               <i className="fas fa-user-plus pr-1"></i>
                     Register
                 </Link>
                 <Link to="/login" className="inline-flex items-center border-0 py-1 px-4 mr-4 bg-green-500 hover:bg-green-700 focus:ring-green-500
                 focus:ring-offset-green-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md
                 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full text-base mt-4 md:mt-0">
-               <i class="fas fa-sign-in-alt pr-1"></i>
+               <i className="fas fa-sign-in-alt pr-1"></i>
                     Login
                 </Link>
             </>
         );
     } else {
         AuthButtons = (
-        // <button type="button" className="py-2 px-4 flex justify-center items-center  bg-green-500 hover:bg-green-700 focus:ring-green-500
-        // focus:ring-offset-green-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md
-        // focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full" onClick={logoutSubmit}>
-        //     <i className="fas fa-power-off"></i>
-        //     Logout
-        // </button>
                 <button className="inline-flex items-center border-0 py-1 px-4 mr-4 bg-green-500 hover:bg-green-700 focus:ring-green-500
                 focus:ring-offset-green-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md
                 focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full text-base mt-4 md:mt-0" onClick={logoutSubmit}>
@@ -61,8 +56,8 @@ const Navbar = () => {
     return (
         <>
 
-<nav className="flex bg-white flex-wrap items-center justify-between p-4">
-    <div className="lg:order-2 w-auto lg:w-1/5 lg:text-center">
+<nav className="flex bg-white flex-wrap items-center justify-between">
+    <div className="lg:order-2 w-auto lg:w-1/5 lg:text-center mt-2">
         <p className="text-xl text-gray-800 font-semibold font-heading">
             Welcome
         </p>
@@ -79,7 +74,7 @@ const Navbar = () => {
         </button>
     </div>
     <div className="navbar-menu hidden lg:order-1 lg:block w-full lg:w-2/5">
-        <Link className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" to="#">
+        {/* <Link className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" to="#">
             Home
         </Link>
         <Link className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" to="#">
@@ -87,7 +82,7 @@ const Navbar = () => {
         </Link>
         <Link className="block lg:inline-block mt-4 lg:mt-0 text-blue-900 hover:text-indigo-600" to="#">
             Galery
-        </Link>
+        </Link> */}
     </div>
     <div className="navbar-menu hidden lg:order-3 lg:block w-full lg:w-2/5 lg:text-right flex items-center">
         {AuthButtons}
