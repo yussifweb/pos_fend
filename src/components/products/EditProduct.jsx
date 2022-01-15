@@ -3,10 +3,25 @@ import React, {useState, useEffect} from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 
-const AddProduct = () => {
+const EditProduct = (props) => {
 
     const history = useHistory();
 
+    const [image, setImage] = useState([]);
+    const [error, setError] = useState([]);
+    const [allcheckbox, setAllCheckboxes] = useState([]);
+    const [Authenticated, setAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
+    
+    const [storeList, setStoreList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
+    const [categoryInput, setCategoryInput] = useState([]);
+    const role = localStorage.getItem('role') 
+
+    const [storeInput, setStoreInput] = useState({
+        store_id: '',
+    });
+    
     const [productInput, setProductInput] = useState({
         category_id: '',
         slug: '',
@@ -17,19 +32,7 @@ const AddProduct = () => {
         original_price: '',
         qty: '',
         brand: '',
-        status: ''
     });
-
-    const [image, setImage] = useState([])
-    const [error, setError] = useState([])
-    const [categoryList, setCategoryList] = useState([]);
-    const [loading, setloading] = useState(true);
-    const [storeList, setStoreList] = useState([]);
-    const [storeInput, setStoreInput] = useState([]);
-    const [allcheckbox, setAllCheckboxes] = useState([])
-    const [Authenticated, setAuthenticated] = useState(false);
-
-    const role = localStorage.getItem('role');
 
     useEffect(() => {
     if(role === 'admin') {
@@ -37,33 +40,93 @@ const AddProduct = () => {
                 if (res.status === 200) {
                 setAuthenticated(true); 
                 }
-                setloading(false);
+                setLoading(false);
             });
     } else if (role === 'owner') {
         axios.get(`/api/checkingAuthenticatedOwner`).then(res =>{
                 if (res.status === 200) {
                 setAuthenticated(true); 
                 }
-                setloading(false);
+                setLoading(false);
             });
         }else if (role === '') {
             swal("Access Denied", "You're not an Admin/Store Owner", "warning");
             history.push('/403');
-            setloading(false);
+            setLoading(false);
         }
             return () => {
             setAuthenticated(false);
             };
     }, [role, history]);
 
+    useEffect(() => {
+    const product_id = props.match.params.id;
+
+        axios.get(`api/edit-product/${product_id}`).then(res =>{
+            if (res.data.status === 200) {
+                setProductInput(res.data.product);
+                setAllCheckboxes(res.data.product);
+                setStoreInput(res.data.product);
+                setCategoryInput(res.data.product);
+            } else if (res.data.status === 404){
+                swal("Error", res.data.message, "error")
+                history.push('/view-products');
+            }
+            setLoading(false);
+        });
+
+    // if (role === 'admin') {
+    //     axios.get(`api/admin-edit-category/${category_id}`).then(res =>{
+    //         if (res.data.status === 200) {
+    //             setCategoryInput(res.data.category);
+    //         } else if (res.data.status === 404){
+    //             swal("Error", res.data.message, "error")
+    //             history.push('/view-category');
+    //         }
+    //         setLoading(false);
+    //     });
+    // } else if (role === 'owner'){
+    //     axios.get(`api/edit-category/${category_id}`).then(res =>{
+    //         if (res.data.status === 200) {
+    //             setCategoryInput(res.data.category);
+    //         } else if (res.data.status === 404){
+    //             swal("Error", res.data.message, "error")
+    //             history.push('/view-category');
+    //         }
+    //         setLoading(false);
+    //     });
+    // }
+    }, [props.match.params.id, history])
+
+    useEffect(() => {
+        axios.get(`/api/all-stores`).then(res => {
+            if (res.status === 200) {
+               setStoreList(res.data.store); 
+            }
+        });
+    }, []);
+
+
+    useEffect(() => {
+        const id = storeInput.store_id;
+        axios.get(`/api/product-view-category`, id).then(res =>{
+            if (res.status === 200) {
+                setCategoryList(res.data.category); 
+            }
+            setLoading(false);
+        });
+    }, [storeInput.store_id]);
+
+        
+
     const handleInput = (e) => {
         e.persist();
         setProductInput({...productInput, [e.target.name]: e.target.value})
     }
 
-    const handleCheckbox = (e) => {
+    const handleCategoryInput = (e) => {
         e.persist();
-        setAllCheckboxes({...allcheckbox, [e.target.name]: e.target.checked})
+        setCategoryInput({...categoryInput, [e.target.name]: e.target.value})
     }
 
     const handleStoreInput = (e) =>{
@@ -71,20 +134,27 @@ const AddProduct = () => {
     setStoreInput({...storeInput, [e.target.name]: e.target.value});
     };
 
+    const handleCheckbox = (e) => {
+        e.persist();
+        setAllCheckboxes({...allcheckbox, [e.target.name]: e.target.checked})
+    }
+
     const handleImage = (e) => {
         e.persist();
         setImage({image: e.target.files[0]})
     }
 
-     const submitProduct = (e) => {
+    const updateProduct = (e) => {
         e.preventDefault();
+        const product_id = props.match.params.id;
 
         const formData = new FormData();
 
         formData.append('image', image.image);
 
+        // formData.append('store_id', storeInput.store_id);
         formData.append('store_id', storeInput.store_id);
-        formData.append('category_id', productInput.category_id);
+        formData.append('category_id', categoryInput.category_id);
         formData.append('slug', productInput.slug);
         formData.append('name', productInput.name);
         formData.append('description', productInput.description);
@@ -94,134 +164,79 @@ const AddProduct = () => {
         formData.append('qty', productInput.qty);
         formData.append('status', allcheckbox.status ? '1':'0');
 
-    if (role === 'admin') {
-        axios.post(`/api/admin-store-product`, formData).then(res => {
+        if (role === 'admin') {
+        axios.put(`/api/admin-update-product/${product_id}`, formData).then(res => {
             if (res.data.status === 200) {
                 swal("Success",res.data.message,"success");
-                setProductInput({...productInput,
-                category_id: '',
-                slug: '',
-                name: '',
-                description: '',
-
-                selling_price: '',
-                original_price: '',
-                qty: '',
-                brand: '',
-            });
                 setError([]);
-                document.getElementById('addCategory').reset();
+                history.push('/view-products');
             } else if (res.data.status === 422){
-                swal("All Fields are mandatory","","error");
+                swal("All fields are mandatory","","error");
                 setError(res.data.validation_errors);
-                // setProductInput({...productInput, error_list:res.data.validation_errors});
+            }else if (res.data.status === 404){
+                swal("Error",res.data.message,"error");
+                history.push('/view-products');
             }
         });
-    } else if (role === 'owner'){
-        axios.post(`/api/store-product`, formData).then(res => {
+        } else if (role === 'owner'){
+        axios.put(`/api/update-product/${product_id}`, formData).then(res => {
             if (res.data.status === 200) {
                 swal("Success",res.data.message,"success");
-                setProductInput({...productInput,
-                category_id: '',
-                slug: '',
-                name: '',
-                description: '',
-
-                selling_price: '',
-                original_price: '',
-                qty: '',
-                brand: '',
-            });
                 setError([]);
-                document.getElementById('addCategory').reset();
+                history.push('/view-products');
             } else if (res.data.status === 422){
-                swal("All Fields are mandatory","","error");
+                swal("All fields are mandatory","","error");
                 setError(res.data.validation_errors);
-                // setProductInput({...productInput, error_list:res.data.validation_errors});
-            }
-        });  
-    }
-
-    }
-
-    useEffect(() => {
-        axios.get(`/api/all-stores`).then(res => {
-            if (res.status === 200) {
-               setStoreList(res.data.store);
+            }else if (res.data.status === 404){
+                swal("Error",res.data.message,"error");
+                history.push('/view-products');
             }
         });
-    }, []);
-
-    const getCategory = (e) => {
-        e.preventDefault();
-        e.persist();
-        const data = {
-            store_id: storeInput.store_id,
-        };
-
-        axios.post(`/api/view-category`, data).then(res =>{
-            if (res.status === 200) {
-                setCategoryList(res.data.category); 
-            }
-            setloading(false);
-        });
-    };
-
-    // useEffect(() => {
-    //     axios.get(`/api/all-category`).then(res => {
-    //         if (res.status === 200) {
-    //            setCategoryList(res.data.category); 
-    //         }
-    //     });
-    // }, [])
+        }
+        
+    }
 
     if (loading) {
        return (
-
-        <button type="button" className="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200
-        text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-            <svg width="20" height="20" fill="currentColor" className="mr-2 animate-spin" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                <path d="M526 1394q0 53-37.5 90.5t-90.5 37.5q-52 0-90-38t-38-90q0-53 37.5-90.5t90.5-37.5 90.5 37.5 37.5 90.5zm498 206q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5
-                37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-704-704q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm1202 498q0 52-38 90t-90 38q-53
-                0-90.5-37.5t-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-964-996q0 66-47 113t-113 47-113-47-47-113 47-113 113-47 113 47 47 113zm1170 498q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5
-                37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-640-704q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm530 206q0 93-66 158.5t-158 65.5q-93 0-158.5-65.5t-65.5-158.5q0-92
-                65.5-158t158.5-66q92 0 158 66t66 158z">
-                </path>
-            </svg>
-            loading
-        </button>
+        <div className='container'>
+            <div className='row'>
+                <div className='col-12 col-md-6'>
+                    <div className="spinner-border text-success" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                    </div>
+            </div>
+        </div>
        );
     }
 
-
     return (
-        <div className='container-fluid px-4'>
+    <div className='container-fluid px-4'>
             <div className="card mt-4">
                 
-                    <form onSubmit={getCategory}>
-                    <div className="form-group mb-3">
-                        <label htmlFor="slug">Select store</label>
-                        <select name="store_id" onChange={handleStoreInput} value={storeInput.store_id}>
-                            <option>Select store</option>
-                            {storeList.map((item) => {
-                                return(
-                                    <option key={item.id} value={item.id}>{item.name}</option>                                                
-                                )
-                            })}                                
-                        </select>
-                        <button type="submit" className='btn btn-success'>Get</button>
-                    </div>
-                </form>
                 <div className="card-header">
                 <h4>Add Product
-                    <Link className="btn btn-primary btn-sm float-end" to="/view-products">View Product</Link>
+                    <Link className="btn btn-primary btn-sm float-end" to="/view-product">View Product</Link>
                </h4>
                 </div>
                 <div className="card-body">
-                <form encType="multipart/form-data" onSubmit={submitProduct} id="addProduct">                    
+                <form encType="multipart/form-data" onSubmit={updateProduct} id="addProduct">    
+
+                        <div className="form-group mb-3">
+                                <label htmlFor="slug">Select store</label>
+                                <select name="store_id" onChange={handleStoreInput} value={storeInput.store_id}>
+                                    <option>Select store</option>
+                                    {storeList.map((item) => {
+                                        return(
+                                            <option key={item.id} value={item.id}>{item.name}</option>                                                
+                                        )
+                                    })}                                
+                                </select>
+                            </div>
+                        
                         <div className="form-group mb-3">
                             <label htmlFor="slug">Select Category</label>
-                            <select name="category_id" onChange={handleInput} value={productInput.category_id}>
+                            <select name="category_id" onChange={handleCategoryInput} value={categoryInput.category_id}>
                                 <option>Select Category</option>
                                 <option value="0">Uncategorized</option>
                                 {categoryList.map((item) => {
@@ -272,13 +287,14 @@ const AddProduct = () => {
                         <div className="col-md-4 form-group mb-3">
                             <label htmlFor="image">Image</label>
                             <input type="file" name="image" className='form-control' onChange={handleImage} />
+                            <img src={`http://localhost:8000/${productInput.image}`} alt={productInput.name} width="50px" />
                         </div>
                         <div className="col-md-4 form-group mb-3">
-                            <label htmlFor="status" className='mr-3'>Status (Checked=Shown)</label>
+                            <label htmlFor="status" className='mr-3'>Status (Checked=Shown)</label> <br />
                             <input type="checkbox" name="status" className="w-50 h-50" onChange={handleCheckbox} defaultChecked={allcheckbox.status === 1 ? true:false}  />
                         </div>
                 </div>
-            <button type="submit" className="btn btn-primary float-end px-4">Add Product</button>
+            <button type="submit" className="btn btn-primary float-end px-4">Update Product</button>
             </form>
             </div>
 
@@ -287,4 +303,4 @@ const AddProduct = () => {
     )
 }
 
-export default AddProduct
+export default EditProduct

@@ -7,31 +7,41 @@ const EditCategory = (props) => {
 
     const history = useHistory();
 
-
     const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(true);
     const [categoryInput, setCategoryInput] = useState([]);
     const [storeList, setStoreList] = useState([]);
+    const [Authenticated, setAuthenticated] = useState(false);
     const role = localStorage.getItem('role');
 
-
-    // useEffect(() => {
-    //     const category_id = props.match.params.id;
-
-    //     axios.get(`api/edit-category/${category_id}`).then(res =>{
-    //         if (res.data.status === 200) {
-    //             setCategoryInput(res.data.category);
-    //         } else if (res.data.status === 404){
-    //             swal("Error", res.data.message, "error")
-    //             history.push('/view-category');
-    //         }
-    //         setLoading(false);
-    //     });
-    // }, [props.match.params.id, history])
-
+    useEffect(() => {
+    if(role === 'admin') {
+        axios.get(`/api/checkingAuthenticated`).then(res =>{
+                if (res.status === 200) {
+                setAuthenticated(true); 
+                }
+                setLoading(false);
+            });
+    } else if (role === 'owner') {
+        axios.get(`/api/checkingAuthenticatedOwner`).then(res =>{
+                if (res.status === 200) {
+                setAuthenticated(true); 
+                }
+                setLoading(false);
+            });
+        }else if (role === '') {
+            swal("Access Denied", "You're not an Admin/Store Owner", "warning");
+            history.push('/403');
+            setLoading(false);
+        }
+            return () => {
+            setAuthenticated(false);
+            };
+    }, [role, history]);
 
     useEffect(() => {
     const category_id = props.match.params.id;
+
     if (role === 'admin') {
         axios.get(`api/admin-edit-category/${category_id}`).then(res =>{
             if (res.data.status === 200) {
