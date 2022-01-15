@@ -75,6 +75,7 @@ const ViewProducts = () => {
     var viewproduct = "";
 
         var ProductStatus = '';
+        
         viewproduct =
         productList.map((item) => {
             if (item.status == '1') {
@@ -83,12 +84,21 @@ const ViewProducts = () => {
                 ProductStatus = 'Hidden'
             }
 
+            var CategoryName = '';
+            if (item.category_id == 0) {
+                CategoryName = 'Uncategorized';
+            }else{
+                CategoryName = item.category.name;
+            } 
+
+            
+
             return (
                 <tr key={item.id}>
                 <th scope="row">{item.id}</th>
                 <td>{item.name}</td>
                 <td>{item.store.name}</td>
-                <td>{item.category.name}</td>
+                <td>{CategoryName}</td>          
                 <td>
                     {ProductStatus}
                 </td>
