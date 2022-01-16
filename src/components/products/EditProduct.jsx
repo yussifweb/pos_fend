@@ -83,6 +83,7 @@ const EditProduct = (props) => {
     const handleCheckbox = (e) => {
         e.persist();
         setAllCheckboxes({...allcheckbox, [e.target.name]: e.target.checked})
+        console.log(allcheckbox.status);
     }
 
 
@@ -95,7 +96,6 @@ const EditProduct = (props) => {
                setAllCheckboxes(res.data.product);
                setCategoryInput(res.data.product);
                setStoreInput(res.data.product);
-
             } else if(res.data.status === 404) {
                 swal("Error",res.data.message,"error");
                 history.push('/view-product');
@@ -268,14 +268,13 @@ const EditProduct = (props) => {
                         <div className="col-md-4 form-group mb-3">
                             <label htmlFor="image">Image</label>
                             <input type="file" name="image" className='form-control' onChange={handleImage} />
-                            <img src={`http://localhost:8000/${productInput.image}`} alt='' width="50px" />
+                            <img src={`http://localhost:8000/${productInput.image}`} alt={productInput.name} width="50px" />
                         </div>
                         <div className="col-md-4 form-group mb-3">
                             <label htmlFor="status" className='mr-3'>Status (Checked=Shown)</label>
-                            <input type="checkbox" name="status" className="w-50 h-50" onChange={handleCheckbox} defaultValue={allcheckbox.status === 1 ? true:false} />
+                            <input type="checkbox" name="status" className="w-50 h-50" onChange={handleCheckbox} defaultChecked={allcheckbox.status === 1 ? '1':'0'} />
                         </div>
                     </div>
-                
 
                 <button type="submit" className="btn btn-primary float-end px-4">Update Product</button>
             </form>

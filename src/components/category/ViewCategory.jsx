@@ -87,9 +87,9 @@ const ViewCategory = () => {
         var CategoryStatus = '';
         viewcategory =
         categoryList.map((item) => {
-            if (item.status == '1') {
+            if (item.status == '0') {
                 CategoryStatus = 'Shown'
-            } else if (item.status == '0') {
+            } else if (item.status == '1') {
                 CategoryStatus = 'Hidden'
             }
 
