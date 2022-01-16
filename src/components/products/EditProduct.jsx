@@ -195,7 +195,7 @@ const EditProduct = (props) => {
             <div className="card mt-4">
                 <div className="card-header">
                 <h4>Edit Product 
-                    <Link className="btn btn-primary btn-sm float-end" to="/admin/view-product">View Product</Link>
+                    <Link className="btn btn-primary btn-sm float-end" to="/view-product">View Product</Link>
                </h4>
                 </div>
                 <div className="card-body">

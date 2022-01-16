@@ -9,10 +9,21 @@ const ProductList = (props) => {
     const [loading, setLoading] = useState(true);
     const [productList, setProductList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
-
+    const [quantity, setQuantity] = useState(1)
 
     const productCount = productList.length;
 
+    const handleDecreament = ()=> {
+        if (quantity > 1) {
+            setQuantity(prevCount => prevCount - 1) 
+        }
+    }
+
+    const handleIncreament = ()=> {
+            if (quantity < 10) {
+                setQuantity(prevCount => prevCount + 1) 
+        }
+    }
 
     const submitToCart = (e) => {
         e.preventDefault();
@@ -21,6 +32,19 @@ const ProductList = (props) => {
             product_id: productList.id,
             // product_qty: quantity,
         }
+
+        // axios.post(`/api/add-to-cart`, data).then( res => {
+        //     if (res.data.status === 201) {
+        //         swal("Success",res.data.message,"success");
+        //     } else if (res.data.status === 409){
+        //         swal("Warning",res.data.message,"warning");
+        //     } else if (res.data.status === 401){
+        //         swal("Error",res.data.message,"error");
+        //     }else if (res.data.status === 404){
+        //         swal("Warning",res.data.message,"warning");
+        //     }
+        // });
+    }
 
     useEffect(() => {
         let isMounted = true;
@@ -54,13 +78,49 @@ const ProductList = (props) => {
                 <span className="visually-hidden">Loading...</span>
             </div>
        );
-    }else{
+    } else {
         var showProductList = '';
+        var inStock = '';
 
         if (productCount) {
         showProductList = productList.map((item, idx) => {
+
+            if (item.qty > 0) {
+                        inStock =
+                        // <div className='container'>
+                            <div className="row">
+                                {/* <div className="col-sm-12 col-md-6 mt-2">
+                                    <div className="input-group">
+                                        <button type='button' onClick={handleDecreament} className="input-group-text btn-sm">-</button>
+                                        <div className="form-control form-control-sm text-center">{quantity}</div>
+                                        <button type='button' onClick={handleIncreament} className="input-group-text btn-sm">+</button>
+                                    </div>
+                                </div> */}
+                                <div className="col-sm-12 col-md-6 mt-2">
+                                    <button type='button' className="btn-sm btn-primary w-100" onClick={ (e) => submitToCart(e, item.id)}>Add to Cart</button>
+                                </div>
+                                <div className="col-md-12">
+                                <button type='button' className="btn-sm btn-danger w-100 mt-2">Add to Wishlist</button>
+                                </div>
+                                 
+                            </div>
+                        // </div>
+                    } else {
+                        inStock =
+                        // <div className='container'>
+                            <div className="row">
+                                <div className="col-md-8">
+                                    <label htmlFor="" className="btn-sm btn-danger px-4 mt-2">Out of Stock</label>
+                                </div>
+                                <div className="col-md-12">
+                                <button type='button' className="btn-sm btn-danger mt-2">Add to Wishlist</button>
+                                </div>
+                            </div>
+                        // </div> 
+                        }
+
             return (
-            <div className="col-md-3" key={idx}>
+            <div className="col-md-3 p-2" key={idx}>
                 <div className="card">
                     <div className="card-body">
                         <Link to={`/collections/${item.category.slug}/${item.slug}`}>
@@ -71,12 +131,13 @@ const ProductList = (props) => {
                         </Link>                        
                     </div>
                     <div className="card-footer">
-                        <button type='button' className="btn btn-primary w-100" onClick={submitToCart}>Add to Cart</button>
+                        {inStock}
                     </div>
                 </div>
-            </div>
+                </div>
             );
         });
+
         } else {
             showProductList = 
             <div className="col-12">
