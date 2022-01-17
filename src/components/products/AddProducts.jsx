@@ -23,7 +23,8 @@ const AddProduct = () => {
     const [image, setImage] = useState([])
     const [error, setError] = useState([])
     const [categoryList, setCategoryList] = useState([]);
-    const [loading, setloading] = useState(true);
+    const [loading, setLoading] = useState(true);
+    // const [isMounted, setIsMounted] = useState(false)
     const [storeList, setStoreList] = useState([]);
     const [storeInput, setStoreInput] = useState([]);
     const [allcheckbox, setAllCheckboxes] = useState([])
@@ -37,19 +38,19 @@ const AddProduct = () => {
                 if (res.status === 200) {
                 setAuthenticated(true); 
                 }
-                setloading(false);
+                setLoading(false);
             });
     } else if (role === 'owner') {
         axios.get(`/api/checkingAuthenticatedOwner`).then(res =>{
                 if (res.status === 200) {
                 setAuthenticated(true); 
                 }
-                setloading(false);
+                setLoading(false);
             });
         }else if (role === '') {
             swal("Access Denied", "You're not an Admin/Store Owner", "warning");
             history.push('/403');
-            setloading(false);
+            setLoading(false);
         }
             return () => {
             setAuthenticated(false);
@@ -64,6 +65,7 @@ const AddProduct = () => {
     const handleCheckbox = (e) => {
         e.persist();
         setAllCheckboxes({...allcheckbox, [e.target.name]: e.target.checked})
+        console.log(allcheckbox.status);
     }
 
     const handleStoreInput = (e) =>{
@@ -92,6 +94,7 @@ const AddProduct = () => {
         formData.append('selling_price', productInput.selling_price);
         formData.append('original_price', productInput.original_price);
         formData.append('qty', productInput.qty);
+        formData.append('unit', productInput.unit);
         formData.append('status', allcheckbox.status ? '1':'0');
 
     if (role === 'admin') {
@@ -152,20 +155,36 @@ const AddProduct = () => {
         });
     }, []);
 
-    const getCategory = (e) => {
-        e.preventDefault();
-        e.persist();
-        const data = {
-            store_id: storeInput.store_id,
-        };
+    // const getCategory = (e) => {
+    //     e.preventDefault();
+    //     e.persist();
+    //     const data = {
+    //         store_id: storeInput.store_id,
+    //     };
 
-        axios.post(`/api/view-category`, data).then(res =>{
+    //     axios.post(`/api/view-category`, data).then(res =>{
+    //         if (res.status === 200) {
+    //             setCategoryList(res.data.category); 
+    //         }
+    //         setloading(false);
+    //     });
+    // };
+
+    useEffect(() => {
+        let isMounted = true;
+        const sid = storeInput.store_id;
+        axios.get(`/api/product-view-category/${sid}`).then(res => {
+            if (isMounted) {
             if (res.status === 200) {
-                setCategoryList(res.data.category); 
-            }
-            setloading(false);
+               setCategoryList(res.data.category); 
+               setLoading(false);
+            }            
+        }            
         });
-    };
+        return () => {
+            isMounted = false;
+        }        
+    }, [storeInput.store_id]);
 
     // useEffect(() => {
     //     axios.get(`/api/all-category`).then(res => {
@@ -198,7 +217,14 @@ const AddProduct = () => {
         <div className='container-fluid px-4'>
             <div className="card mt-4">
                 
-                    <form onSubmit={getCategory}>
+                <div className="card-header">
+                <h4>Add Product
+                    <Link className="btn btn-primary btn-sm float-end" to="/view-products">View Product</Link>
+               </h4>
+                </div>
+                <div className="card-body">
+                <form encType="multipart/form-data" onSubmit={submitProduct} id="addProduct">
+                    {/* <form onSubmit={getCategory}> */}
                     <div className="form-group mb-3">
                         <label htmlFor="slug">Select store</label>
                         <select name="store_id" onChange={handleStoreInput} value={storeInput.store_id}>
@@ -209,16 +235,10 @@ const AddProduct = () => {
                                 )
                             })}                                
                         </select>
-                        <button type="submit" className='btn btn-success'>Get</button>
+                        {/* <button type="submit" className='btn btn-success'>Get</button> */}
                     </div>
-                </form>
-                <div className="card-header">
-                <h4>Add Product
-                    <Link className="btn btn-primary btn-sm float-end" to="/view-products">View Product</Link>
-               </h4>
-                </div>
-                <div className="card-body">
-                <form encType="multipart/form-data" onSubmit={submitProduct} id="addProduct">                    
+                {/* </form> */}
+
                         <div className="form-group mb-3">
                             <label htmlFor="slug">Select Category</label>
                             <select name="category_id" onChange={handleInput} value={productInput.category_id}>
@@ -249,20 +269,25 @@ const AddProduct = () => {
                         </div>
 
                     <div className="row">
-                        <div className="col-md-4 form-group mb-3">
+                        <div className="col-md-3 form-group mb-3">
                             <label htmlFor="selling_price">Selling Price</label>
                             <input type="text" name="selling_price" className='form-control' onChange={handleInput} value={productInput.selling_price} />
                             <span className="text-sm text-danger">{error.selling_price}</span>
                         </div>
-                        <div className="col-md-4 form-group mb-3">
+                        <div className="col-md-3 form-group mb-3">
                             <label htmlFor="original_price">Original Price</label>
                             <input type="text" name="original_price" className='form-control' onChange={handleInput} value={productInput.original_price} />
                             <span className="text-sm text-danger">{error.original_price}</span>
                         </div>
-                        <div className="col-md-4 form-group mb-3">
+                        <div className="col-md-3 form-group mb-3">
                             <label htmlFor="qty">Quantity</label>
                             <input type="text" name="qty" className='form-control' onChange={handleInput} value={productInput.qty} />
                             <span className="text-sm text-danger">{error.qty}</span>
+                        </div>
+                        <div className="col-md-3 form-group mb-3">
+                            <label htmlFor="unit">Unit</label>
+                            <input type="text" name="unit" className='form-control' onChange={handleInput} value={productInput.unit} />
+                            <span className="text-sm text-danger">{error.unit}</span>
                         </div>
                         <div className="col-md-4 form-group mb-3">
                             <label htmlFor="brand">Brand</label>

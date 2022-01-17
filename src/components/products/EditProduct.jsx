@@ -143,6 +143,7 @@ const EditProduct = (props) => {
         formData.append('selling_price', productInput.selling_price);
         formData.append('original_price', productInput.original_price);
         formData.append('qty', productInput.qty);
+        formData.append('unit', productInput.unit);
         formData.append('status', allcheckbox.status ? '1':'0');
 
         if (role === 'admin') {
@@ -245,20 +246,25 @@ const EditProduct = (props) => {
                         </div>
 
                     <div className="row">
-                        <div className="col-md-4 form-group mb-3">
+                        <div className="col-md-3 form-group mb-3">
                             <label htmlFor="selling_price">Selling Price</label>
                             <input type="text" name="selling_price" className='form-control' onChange={handleInput} value={productInput.selling_price} />
                             <span className="text-sm text-danger">{error.selling_price}</span>
                         </div>
-                        <div className="col-md-4 form-group mb-3">
+                        <div className="col-md-3 form-group mb-3">
                             <label htmlFor="original_price">Original Price</label>
                             <input type="text" name="original_price" className='form-control' onChange={handleInput} value={productInput.original_price} />
                             <span className="text-sm text-danger">{error.original_price}</span>
                         </div>
-                        <div className="col-md-4 form-group mb-3">
+                        <div className="col-md-3 form-group mb-3">
                             <label htmlFor="qty">Quantity</label>
                             <input type="text" name="qty" className='form-control' onChange={handleInput} value={productInput.qty} />
                             <span className="text-sm text-danger">{error.qty}</span>
+                        </div>
+                        <div className="col-md-3 form-group mb-3">
+                            <label htmlFor="unit">Unit</label>
+                            <input type="text" name="unit" className='form-control' onChange={handleInput} value={productInput.unit} />
+                            <span className="text-sm text-danger">{error.unit}</span>
                         </div>
                         <div className="col-md-4 form-group mb-3">
                             <label htmlFor="brand">Brand</label>

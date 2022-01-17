@@ -9,41 +9,42 @@ const ProductList = (props) => {
     const [loading, setLoading] = useState(true);
     const [productList, setProductList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
-    const [quantity, setQuantity] = useState(1)
+    // const [quantity, setQuantity] = useState(1)
 
     const productCount = productList.length;
 
-    const handleDecreament = ()=> {
-        if (quantity > 1) {
-            setQuantity(prevCount => prevCount - 1) 
-        }
-    }
+    // const handleDecreament = ()=> {
+    //     if (quantity > 1) {
+    //         setQuantity(prevCount => prevCount - 1) 
+    //     }
+    // }
 
-    const handleIncreament = ()=> {
-            if (quantity < 10) {
-                setQuantity(prevCount => prevCount + 1) 
-        }
-    }
+    // const handleIncreament = ()=> {
+    //         if (quantity < 10) {
+    //             setQuantity(prevCount => prevCount + 1) 
+    //     }
+    // }
 
-    const submitToCart = (e) => {
+    const submitToCart = (e, id) => {
         e.preventDefault();
-
+        e.persist();
+        
         const data = {
-            product_id: productList.id,
-            // product_qty: quantity,
+            product_id: id,
+            product_qty: 1,
         }
 
-        // axios.post(`/api/add-to-cart`, data).then( res => {
-        //     if (res.data.status === 201) {
-        //         swal("Success",res.data.message,"success");
-        //     } else if (res.data.status === 409){
-        //         swal("Warning",res.data.message,"warning");
-        //     } else if (res.data.status === 401){
-        //         swal("Error",res.data.message,"error");
-        //     }else if (res.data.status === 404){
-        //         swal("Warning",res.data.message,"warning");
-        //     }
-        // });
+        axios.post(`/api/add-to-cart`, data).then( res => {
+            if (res.data.status === 201) {
+                swal("Success",res.data.message,"success");
+            } else if (res.data.status === 409){
+                swal("Warning",res.data.message,"warning");
+            } else if (res.data.status === 401){
+                swal("Error",res.data.message,"error");
+            }else if (res.data.status === 404){
+                swal("Warning",res.data.message,"warning");
+            }
+        });
     }
 
     useEffect(() => {
@@ -91,17 +92,17 @@ const ProductList = (props) => {
                             <div className="row">
                                 {/* <div className="col-sm-12 col-md-6 mt-2">
                                     <div className="input-group">
-                                        <button type='button' onClick={handleDecreament} className="input-group-text btn-sm">-</button>
+                                        <button type='button' onClick={(e) =>handleDecreament(e, item.id)} className="input-group-text btn-sm">-</button>
                                         <div className="form-control form-control-sm text-center">{quantity}</div>
-                                        <button type='button' onClick={handleIncreament} className="input-group-text btn-sm">+</button>
+                                        <button type='button' onClick={(e) =>handleIncreament(e, item.id)} className="input-group-text btn-sm">+</button>
                                     </div>
                                 </div> */}
-                                <div className="col-sm-12 col-md-6 mt-2">
+                                <div className="col-sm-12 col-md-12">
                                     <button type='button' className="btn-sm btn-primary w-100" onClick={ (e) => submitToCart(e, item.id)}>Add to Cart</button>
                                 </div>
-                                <div className="col-md-12">
+                                {/* <div className="col-md-12">
                                 <button type='button' className="btn-sm btn-danger w-100 mt-2">Add to Wishlist</button>
-                                </div>
+                                </div> */}
                                  
                             </div>
                         // </div>
@@ -109,12 +110,12 @@ const ProductList = (props) => {
                         inStock =
                         // <div className='container'>
                             <div className="row">
-                                <div className="col-md-8">
-                                    <label htmlFor="" className="btn-sm btn-danger px-4 mt-2">Out of Stock</label>
+                                <div className="col-sm-12 col-md-12">
+                                    <label htmlFor="" className="btn-sm btn-danger">Out of Stock</label>
                                 </div>
-                                <div className="col-md-12">
+                                {/* <div className="col-md-12">
                                 <button type='button' className="btn-sm btn-danger mt-2">Add to Wishlist</button>
-                                </div>
+                                </div> */}
                             </div>
                         // </div> 
                         }
@@ -122,19 +123,24 @@ const ProductList = (props) => {
             return (
             <div className="col-md-3 p-2" key={idx}>
                 <div className="card">
-                    <div className="card-body">
-                        <Link to={`/collections/${item.category.slug}/${item.slug}`}>
+                    <div className="card-body" style={{marginBottom: "-25px"}}>
+                        <span className="position-absolute top-0 start-0 translate-start badge rounded bg-green-700">
+                            GH₵ {item.selling_price}
+                            <span className="visually-hidden">Selling Price</span>
+                        </span>
+                        <Link to={`/productlist/${item.category.slug}/${item.slug}`}>
                             <img src={`http://localhost:8000/${item.image}`} className='w-100' alt={item.name} />
                         </Link>
-                        <Link to={`/collections/${item.category.slug}/${item.slug}`} className="nav-link">
+                        <Link to={`/productlist/${item.category.slug}/${item.slug}`} className="nav-link">
                             <h6>{item.name}</h6>
-                        </Link>                        
+                        </Link>
+                        <p className="text-sm text-center">{item.qty} {item.unit} left</p>                     
                     </div>
                     <div className="card-footer">
                         {inStock}
                     </div>
                 </div>
-                </div>
+            </div>
             );
         });
 

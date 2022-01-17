@@ -25,21 +25,36 @@ const ViewCategory = () => {
     };
 
 
-    const getCategory = (e) => {
-        e.preventDefault();
-        e.persist();
-        const data = {
-            store_id: storeInput.store_id,
-        };
+    // const getCategory = (e) => {
+    //     e.preventDefault();
+    //     e.persist();
+    //     const data = {
+    //         store_id: storeInput.store_id,
+    //     };
 
-        axios.post(`/api/view-category`, data).then(res =>{
-            if (res.status === 200) {
-                setCategoryList(res.data.category); 
-            }
-            setLoading(false);
-        });
-    };
+    //     axios.post(`/api/view-category`, data).then(res =>{
+    //         if (res.status === 200) {
+    //             setCategoryList(res.data.category); 
+    //         }
+    //         setLoading(false);
+    //     });
+    // };
     
+    useEffect(() => {
+        let isMounted = true;
+        const sid = storeInput.store_id;
+        axios.get(`/api/product-view-category/${sid}`).then(res => {
+            if (isMounted) {
+            if (res.status === 200) {
+               setCategoryList(res.data.category); 
+               setLoading(false);
+            }            
+        }            
+        });
+        return () => {
+            isMounted = false;
+        }        
+    }, [storeInput.store_id]);
 
      const deleteCategory = (e, id) => {
         e.preventDefault();
@@ -114,7 +129,7 @@ const ViewCategory = () => {
     return (
         <>
         <div className="container">
-            <form onSubmit={getCategory}>
+            {/* <form onSubmit={getCategory}> */}
                     <div className="form-group mb-3">
                         <label htmlFor="slug">Select store</label>
                         <select name="store_id" onChange={handleInput} value={storeInput.store_id}>
@@ -125,9 +140,9 @@ const ViewCategory = () => {
                                 )
                             })}                                
                         </select>
-                        <button type="submit" className='btn btn-success'>Get</button>
+                        {/* <button type="submit" className='btn btn-success'>Get</button> */}
                     </div>
-                </form>
+                {/* </form> */}
         <div className='card mt-4'>
             <div className="card-header">
                <h4>Category List
