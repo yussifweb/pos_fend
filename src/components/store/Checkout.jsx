@@ -46,7 +46,7 @@ const Checkout = () => {
             if (res.data.status === 200) {
                 swal("Sale Made Succesfully",res.data.message,"success");
                 setError([]); 
-                history.push('/thank-you');
+                history.push('/cart');
             }  else if (res.data.status === 422) {
                 swal("All fields are mandatory","","warning");
                 setError(res.data.errors)

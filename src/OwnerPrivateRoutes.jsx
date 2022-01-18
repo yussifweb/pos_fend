@@ -26,7 +26,7 @@ const [loading, setloading] = useState(true);
     axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err){
         if (err.response.status === 401) {
             swal("Unauthorized", err.response.data.message, "warning");
-            history.push('/');
+            history.push('/login');
         }
         return Promise.reject(err);
     });

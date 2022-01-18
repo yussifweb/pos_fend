@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 
+const app_url = process.env.REACT_APP_URL;
+
 const Cart = () => {
 
     const history = useHistory();
@@ -106,7 +108,7 @@ const Cart = () => {
                             totalCartPrice += item.product.selling_price * item.product_qty;
                             return (
                         <tr key={idx}>
-                        <td><img src={`http://localhost:8000/${item.product.image}`} alt={item.product.name} className="rounded-circle" width="50px" /></td>
+                        <td><img src={`${app_url}${item.product.image}`} alt={item.product.name} className="rounded-circle" width="50px" /></td>
 
                         <td>{item.product.name}</td>
 

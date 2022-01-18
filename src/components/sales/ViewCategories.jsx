@@ -39,6 +39,7 @@ const ViewCategories = () => {
     // };
 
     useEffect(() => {
+        document.title = "Categories";
         let isMounted = true;
         const sid = storeInput.store_id;
         axios.get(`/api/product-view-category/${sid}`).then(res => {
@@ -73,11 +74,6 @@ const ViewCategories = () => {
 
     return (
         <div>
-            <div className="py-3 bg-warning">
-                <div className="container">
-                    <h6>Category page</h6>
-                </div>
-            </div>
             {/* <form onSubmit={getCategory}> */}
                     <div className="form-group mb-3">
                         <label htmlFor="slug">Select store</label>

@@ -17,12 +17,13 @@ const history = useHistory();
                 localStorage.removeItem('auth_token', res.data.token);
                 localStorage.removeItem('auth_name', res.data.username);
                 swal("Success", res.data.message, "success");
-                history.push('/');
+                history.push('/login');
             } else {
                 
             }
         })
     }
+    
     var AuthButtons = '';
 
     if (!localStorage.getItem('auth_token')) {
@@ -55,7 +56,7 @@ const history = useHistory();
 
     return (
         <>
-
+{/* 
 <nav className="flex bg-white flex-wrap items-center justify-between">
     <div className="lg:order-2 w-auto lg:w-1/5 lg:text-center mt-2">
         <p className="text-xl text-gray-800 font-semibold font-heading">
@@ -73,7 +74,7 @@ const history = useHistory();
             </svg>
         </button>
     </div>
-    <div className="navbar-menu hidden lg:order-1 lg:block w-full lg:w-2/5">
+    <div className="navbar-menu hidden lg:order-1 lg:block w-full lg:w-2/5"> */}
         {/* <Link className="block lg:inline-block mt-4 lg:mt-0 mr-10 text-blue-900 hover:text-indigo-600" to="#">
             Home
         </Link>
@@ -83,11 +84,15 @@ const history = useHistory();
         <Link className="block lg:inline-block mt-4 lg:mt-0 text-blue-900 hover:text-indigo-600" to="#">
             Galery
         </Link> */}
-    </div>
+    {/* </div> */}
+    {/* <div className="navbar-menu hidden lg:order-3 lg:block w-full lg:w-2/5 lg:text-right flex items-center">
+        {AuthButtons}
+    </div> */}
+    {/* </nav> */}
+
     <div className="navbar-menu hidden lg:order-3 lg:block w-full lg:w-2/5 lg:text-right flex items-center">
         {AuthButtons}
     </div>
-    </nav>
 
             
         </>

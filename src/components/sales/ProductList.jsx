@@ -75,9 +75,11 @@ const ProductList = (props) => {
 
     if (loading) {
        return (
+           <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
             <div className="spinner-border text-success" role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>
+        </div>
        );
     } else {
         var showProductList = '';

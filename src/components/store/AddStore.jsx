@@ -109,8 +109,6 @@ const storeSubmit = (e) => {
 
     return (
         <>
-        
-        <Navbar />
         <div className="w-full h-screen font-sans bg-cover bg-landscape bg-gray-400">
         <div className="container flex items-center justify-center flex-1 h-full mx-auto">
             <div className="w-full max-w-lg">

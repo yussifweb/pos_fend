@@ -44,18 +44,18 @@ const registerSubmit = (e) => {
 }
 
     return (
-<div className="w-full h-screen font-sans bg-cover bg-landscape">
+<div className="w-full h-screen font-sans bg-cover bg-landscape bg-blue-500">
     <div className="container flex items-center justify-center flex-1 h-full mx-auto">
         <div className="w-full max-w-lg">
             <div className="leading-loose">
 <div className="flex flex-col max-w-md px-4 py-8 bg-white rounded-lg shadow-xl dark:bg-gray-600 sm:px-6 md:px-8 lg:px-10">
-    <div className="self-center mb-2 text-xl font-light text-gray-800 sm:text-2xl dark:text-white">
-        Create a new account
+    <div className="self-center mb-2 text-xl font-light text-gray-800 sm:text-2xl">
+        Create a New Account
     </div>
     <span className="justify-center text-sm text-center text-gray-500 flex-items-center dark:text-gray-400">
-        Already have an account ?
-        <Link to="/login" className="text-sm text-blue-500 underline hover:text-blue-700">
-            Sign in
+        Already have an account?
+        <Link to="/login" className="text-sm text-blue-500 no-underline hover:text-blue-700 ml-2">
+            Sign In
         </Link>
     </span>
     <div className="p-6 mt-8">

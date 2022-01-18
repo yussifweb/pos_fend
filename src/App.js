@@ -19,8 +19,12 @@ import ProductList from './components/sales/ProductList';
 import ProductDetail from './components/sales/ProductDetail';
 import Cart from './components/store/Cart';
 import Checkout from './components/store/Checkout';
+import Order from './components/orders/Order';
+import Sidebar from './components/global/Sidebar';
 
-axios.defaults.baseURL = "http://localhost:8000/";
+const app_url = process.env.REACT_APP_URL;
+
+axios.defaults.baseURL = app_url;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
 axios.defaults.withCredentials = true;
@@ -36,6 +40,9 @@ function App() {
   return (
     <div className="">
       <Router>
+
+        
+
         <Switch>
           {/* <Route path="/" exact component={Home} />
           <Route path="/about" exact component={About} />
@@ -43,7 +50,7 @@ function App() {
           {/* <AdminPrivateRoutes path="/admin" name="Admin" />
           <OwnerPrivateRoutes path="/owner" name="Owner" /> */}
 
-          <Route path="/add-store" exact component={AddStore} />
+          {/* <Route path="/add-store" exact component={AddStore} />
           <Route path="/view-stores" exact component={ViewStores} />
 
           <Route path="/add-category" exact component={AddCategory} />          
@@ -60,7 +67,7 @@ function App() {
 
           <Route path="/cart" exact component={Cart} />
           <Route path="/checkout" exact component={Checkout} />
-          
+          <Route path="/orders" exact component={Order} /> */}
 
           {/* <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} /> */}
@@ -72,7 +79,9 @@ function App() {
             {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Register />}
           </Route>
 
-          <Route path="/" exact component={Index} />
+          <Sidebar path="/" name="Home"/>
+
+          {/* <Route path="/" exact component={Index} /> */}
 
 
           {/* <Route path="/owner" exact component={OwnerIndex} /> */}

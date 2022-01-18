@@ -3,6 +3,8 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
 
+const app_url = process.env.REACT_APP_URL
+
 const ViewProducts = () => {
 
     const [loading, setLoading] = useState(true);

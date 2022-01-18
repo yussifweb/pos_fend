@@ -48,12 +48,12 @@ const loginSubmit = (e) => {
     return (
         <>
 
-<div className="w-full h-screen font-sans bg-cover bg-landscape">
+<div className="w-full h-screen font-sans bg-cover bg-landscape bg-blue-500">
     <div className="container flex items-center justify-center flex-1 h-full mx-auto">
         <div className="w-full max-w-lg">
             <div className="leading-loose">
-                <form onSubmit={loginSubmit} className="max-w-sm p-10 m-auto bg-white bg-opacity-25 rounded shadow-xl">
-                    <p className="mb-8 text-2xl font-light text-center text-white">
+                <form onSubmit={loginSubmit} className="max-w-sm p-10 m-auto bg-white rounded shadow-xl">
+                    <p className="mb-8 text-2xl font-light text-center text-gray-700">
                         Login
                     </p>
                    
