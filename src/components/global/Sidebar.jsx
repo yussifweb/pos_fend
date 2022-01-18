@@ -128,7 +128,10 @@ function Sidebar(props) {
   const drawer = (
     <div>
       <Toolbar/>
-        Welcome
+
+        <Typography variant="h6" component="div">
+            Welcome
+          </Typography>
 
       <Divider />
       <ul className="px-4 pt-3">
@@ -229,7 +232,7 @@ function Sidebar(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar component="div">
+      <Toolbar component="div">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -245,6 +248,7 @@ function Sidebar(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {document.title}
           </Typography>
+          <Link to="/cart" className="nav-item nav-link text-white">
           <Tooltip title="Cart">
           <IconButton size="large" aria-label="show cart" color="inherit">
           <Badge badgeContent={0} color="error">
@@ -252,6 +256,7 @@ function Sidebar(props) {
           </Badge>
           </IconButton>
           </Tooltip>
+          </Link>
           {AuthButtons}
 
 
@@ -298,7 +303,7 @@ function Sidebar(props) {
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
-        <Toolbar />
+      <Toolbar />
 
         <Switch>
 

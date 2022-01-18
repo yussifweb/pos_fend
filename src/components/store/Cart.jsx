@@ -158,12 +158,6 @@ const Cart = () => {
 
     return (
         <div>
-            <div className="py-3 bg-warning">
-                <div className="container">
-                    <h6>Home / Cart</h6>
-                </div>
-            </div>
-
 
             <div className="py-4">
                 <div className="container">
