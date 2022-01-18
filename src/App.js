@@ -79,6 +79,9 @@ function App() {
             {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Register />}
           </Route>
 
+          <Route path="/403" exact component={Page403} />
+          <Route path="/404" exact component={Page404} />
+
           <Sidebar path="/" name="Home"/>
 
           {/* <Route path="/" exact component={Index} /> */}
@@ -88,20 +91,19 @@ function App() {
           {/* <Route path="/admin" exact component={AdminIndex} /> */}
 
           
-          <Route path="/login">
+          {/* <Route path="/login">
             {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Login />}
           </Route>
 
           <Route path="/register">
             {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Register />}
-          </Route>
+          </Route> */}
 
           {/* <PublicRoutes path="/" name="Home" /> */}
           {/* <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} /> */}
 
-          <Route path="/403" exact component={Page403} />
-          <Route path="/404" exact component={Page404} />
+          
 
 
           {/* <Route path="/admin" name="Admin" render={(props) => <Layout {...props} />} /> */}
