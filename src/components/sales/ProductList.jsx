@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
 
+const app_url = process.env.REACT_APP_URL;
+
 const ProductList = (props) => {
 
     const history = useHistory;
@@ -131,7 +133,7 @@ const ProductList = (props) => {
                             <span className="visually-hidden">Selling Price</span>
                         </span>
                         <Link to={`/productlist/${item.category.slug}/${item.slug}`}>
-                            <img src={`http://localhost:8000/${item.image}`} className='w-100' alt={item.name} />
+                            <img src={`${app_url}${item.image}`} className='w-100' alt={item.name} />
                         </Link>
                         <Link to={`/productlist/${item.category.slug}/${item.slug}`} className="nav-link">
                             <h6>{item.name}</h6>
