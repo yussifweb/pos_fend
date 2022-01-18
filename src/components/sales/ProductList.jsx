@@ -158,11 +158,11 @@ const ProductList = (props) => {
 
     return (
         <div>
-            <div className="py-3 bg-warning">
+            {/* <div className="py-3 bg-warning">
                 <div className="container">
                     <h6>Product List / {categoryList.name}</h6>
                 </div>
-            </div>
+            </div> */}
 
 
             <div className="py-3">
