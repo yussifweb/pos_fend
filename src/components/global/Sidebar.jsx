@@ -79,14 +79,22 @@ function Sidebar(props) {
         history.push('/login');
     }
 
-    useEffect(() => {
-        axios.get(`/api/all-stores`).then(res => {
-            if (res.status === 200) {
-              setStoreList(res.data.store);
-              
+    const logoutSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post(`/api/logout`).then(res => {
+            if (res.data.status === 200) {
+                localStorage.removeItem('auth_token', res.data.token);
+                localStorage.removeItem('auth_name', res.data.username);
+                localStorage.removeItem('currentStore');
+                localStorage.removeItem('role');
+                swal("Success", res.data.message, "success");
+                history.push('/login');
+            } else {
+                
             }
-        });
-    }, [])
+        })
+    }
 
     const handleStoreInput = (e, id) =>{
     e.persist();
@@ -115,22 +123,16 @@ function Sidebar(props) {
     //     return Promise.reject(error);
     // });
 
-  const logoutSubmit = (e) => {
-        e.preventDefault();
+  
 
-        axios.post(`/api/logout`).then(res => {
-            if (res.data.status === 200) {
-                localStorage.removeItem('auth_token', res.data.token);
-                localStorage.removeItem('auth_name', res.data.username);
-                localStorage.removeItem('currentStore');
-                localStorage.removeItem('role');
-                swal("Success", res.data.message, "success");
-                history.push('/login');
-            } else {
-                
+    useEffect(() => {
+        axios.get(`/api/all-stores`).then(res => {
+            if (res.status === 200) {
+              setStoreList(res.data.store);
+              
             }
-        })
-    }
+        });
+    }, [])
 
   var AuthButtons = '';
 
