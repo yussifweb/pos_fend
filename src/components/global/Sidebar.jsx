@@ -154,6 +154,8 @@ function Sidebar(props) {
         <strong>{localStorage.getItem('auth_name')}</strong>
       </a>
       <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+        <li><p className="dropdown-item">Select Store</p></li>
+        <li><hr className="dropdown-divider" /></li>
         {storeList.map((item) => {
             return(
                 <li className="dropdown-item" key={item.id} value={item.id} onClick={(e) => handleStoreInput(e, item.id)}>{item.name}</li>                                          
@@ -163,7 +165,7 @@ function Sidebar(props) {
         <li><a className="dropdown-item" href="#">Settings</a></li>
         <li><a className="dropdown-item" href="#">Profile</a></li>*/}
         <li><hr className="dropdown-divider" /></li>
-        <li><a className="dropdown-item" href="#">Sign out</a></li>
+        <li><p className="dropdown-item">Sign out</p></li>
       </ul>
       </div>
 
