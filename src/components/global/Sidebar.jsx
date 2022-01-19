@@ -120,6 +120,8 @@ function Sidebar(props) {
             if (res.data.status === 200) {
                 localStorage.removeItem('auth_token', res.data.token);
                 localStorage.removeItem('auth_name', res.data.username);
+                localStorage.removeItem('currentStore');
+                localStorage.removeItem('role');
                 swal("Success", res.data.message, "success");
                 history.push('/login');
             } else {
