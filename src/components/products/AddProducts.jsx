@@ -31,6 +31,7 @@ const AddProduct = () => {
     const [Authenticated, setAuthenticated] = useState(false);
 
     const role = localStorage.getItem('role');
+    const currentStore = localStorage.getItem('currentStore');
 
     useEffect(() => {
     if(role === 'admin') {
@@ -85,7 +86,7 @@ const AddProduct = () => {
 
         formData.append('image', image.image);
 
-        formData.append('store_id', storeInput.store_id);
+        formData.append('store_id', currentStore);
         formData.append('category_id', productInput.category_id);
         formData.append('slug', productInput.slug);
         formData.append('name', productInput.name);
@@ -172,7 +173,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         let isMounted = true;
-        const sid = storeInput.store_id;
+        const sid = currentStore;
         axios.get(`/api/product-view-category/${sid}`).then(res => {
             if (isMounted) {
             if (res.status === 200) {
@@ -184,7 +185,7 @@ const AddProduct = () => {
         return () => {
             isMounted = false;
         }        
-    }, [storeInput.store_id]);
+    }, [currentStore]);
 
     // useEffect(() => {
     //     axios.get(`/api/all-category`).then(res => {
@@ -226,7 +227,7 @@ const AddProduct = () => {
                 <div className="card-body">
                 <form encType="multipart/form-data" onSubmit={submitProduct} id="addProduct">
                     {/* <form onSubmit={getCategory}> */}
-                    <div className="form-group mb-3">
+                    {/* <div className="form-group mb-3">
                         <label htmlFor="slug">Select store</label>
                         <select name="store_id" onChange={handleStoreInput} value={storeInput.store_id}>
                             <option>Select store</option>
@@ -235,9 +236,9 @@ const AddProduct = () => {
                                     <option key={item.id} value={item.id}>{item.name}</option>                                                
                                 )
                             })}                                
-                        </select>
+                        </select> */}
                         {/* <button type="submit" className='btn btn-success'>Get</button> */}
-                    </div>
+                    {/* </div> */}
                 {/* </form> */}
 
                         <div className="form-group mb-3">

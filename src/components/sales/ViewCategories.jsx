@@ -17,10 +17,10 @@ const ViewCategories = () => {
         });
     }, [])
 
-    const handleInput = (e) =>{
-    e.persist();
-    setStoreInput({...storeInput, [e.target.name]: e.target.value});
-    };
+    // const handleInput = (e) =>{
+    // e.persist();
+    // setStoreInput({...storeInput, [e.target.name]: e.target.value});
+    // };
 
 
     // const getCategory = (e) => {
@@ -41,7 +41,7 @@ const ViewCategories = () => {
     useEffect(() => {
         document.title = "Categories";
         let isMounted = true;
-        const sid = storeInput.store_id;
+        const sid = localStorage.getItem('currentStore');
         axios.get(`/api/product-view-category/${sid}`).then(res => {
             if (isMounted) {
             if (res.status === 200) {
@@ -53,7 +53,7 @@ const ViewCategories = () => {
         return () => {
             isMounted = false;
         }        
-    }, [storeInput.store_id]);
+    }, []);
 
 
     //     if (loading) {
@@ -75,7 +75,7 @@ const ViewCategories = () => {
     return (
         <div>
             {/* <form onSubmit={getCategory}> */}
-                    <div className="form-group mb-3">
+                    {/* <div className="form-group mb-3">
                         <label htmlFor="slug">Select store</label>
                         <select name="store_id" onChange={handleInput} value={storeInput.store_id}>
                             <option>Select store</option>
@@ -84,9 +84,9 @@ const ViewCategories = () => {
                                     <option key={item.id} value={item.id}>{item.name}</option>                                                
                                 )
                             })}                                
-                        </select>
+                        </select> */}
                         {/* <button type="submit" className='btn btn-success'>Get</button> */}
-                    </div>
+                    {/* </div> */}
                 {/* </form> */}
 
 

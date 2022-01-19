@@ -1,17 +1,19 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
 
 const app_url = process.env.REACT_APP_URL
 
 const ViewProducts = () => {
 
+    const history = useHistory();
+
     const [loading, setLoading] = useState(true);
     const [productList, setProductList] = useState([]);
     const [storeList, setStoreList] = useState([]);
-    const [storeInput, setStoreInput] = useState([]);
     const role = localStorage.getItem('role');
+    const currentStore = localStorage.getItem('currentStore');
 
     useEffect(() => {
         axios.get(`/api/all-stores`).then(res => {
@@ -21,27 +23,49 @@ const ViewProducts = () => {
         });
     }, [])
 
-    const handleInput = (e) =>{
-    e.persist();
-    setStoreInput({...storeInput, [e.target.name]: e.target.value});
-    };
+    // const handleInput = (e) =>{
+    // e.persist();
+    // setStoreInput({...storeInput, [e.target.name]: e.target.value});
+    // };
 
 
-    const getStore = (e) => {
-        e.preventDefault();
-        e.persist();
-        const data = {
-            store_id: storeInput.store_id,
-        };
+    // const getStore = (e) => {
+    //     e.preventDefault();
+    //     e.persist();
+    //     const data = {
+    //         store_id: storeInput.store_id,
+    //     };
 
-        axios.post(`/api/view-products`, data).then(res =>{
-            if (res.status === 200) {
-                setProductList(res.data.products); 
-            }
-            setLoading(false);
-        });
-    };
+    //     axios.post(`/api/view-products`, data).then(res =>{
+    //         if (res.status === 200) {
+    //             setProductList(res.data.products); 
+    //         }
+    //         setLoading(false);
+    //     });
+    // };
     
+    useEffect(() => {
+        let isMounted = true;
+        const id = currentStore;
+        axios.get(`/api/view-products/${id}`).then(res => {
+            if (isMounted) {
+            if (res.data.status === 200) {
+               setProductList(res.data.products);  
+               setLoading(false);
+            } else if (res.data.status === 400) {
+                swal("Warning",res.data.message,"warning")
+            } else if (res.data.status === 404) {
+                setLoading(false);
+                swal("Warning",res.data.message,"warning")
+                history.push('/')
+            }           
+        }            
+        });
+        return () => {
+            isMounted = false;
+        }
+        
+    },[history, currentStore]);
 
      const deleteProduct = (e, id) => {
         e.preventDefault();
@@ -117,7 +141,7 @@ const ViewProducts = () => {
     return (
         <>
         <div className="container">
-            <form onSubmit={getStore}>
+            {/* <form onSubmit={getStore}>
                     <div className="form-group mb-3">
                         <label htmlFor="slug">Select store</label>
                         <select name="store_id" onChange={handleInput} value={storeInput.store_id}>
@@ -130,7 +154,7 @@ const ViewProducts = () => {
                         </select>
                         <button type="submit" className='btn btn-success'>Get</button>
                     </div>
-                </form>
+                </form> */}
         <div className='card mt-4'>
             <div className="card-header">
                <h4>Product List
