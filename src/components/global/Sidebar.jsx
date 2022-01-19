@@ -8,6 +8,8 @@ import { Redirect, Route, Switch, useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+import UserImage from "../../../src/assets/images/user.png"
+
 import AddCategory from '../category/AddCategory';
 import AddStore from '../store/AddStore';
 import ViewCategory from '../category/ViewCategory';
@@ -148,7 +150,7 @@ function Sidebar(props) {
       {/* <Toolbar /> */}
       <div className="dropdown px-4 py-3">
       <a href="#" className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://github.com/mdo.png" alt="" width="32" height="32" className="rounded-circle me-2" />
+        <img src={UserImage} alt="" width="32" height="32" className="rounded-circle me-2" />
         <strong>{localStorage.getItem('auth_name')}</strong>
       </a>
       <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">

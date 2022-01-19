@@ -7,6 +7,7 @@ const Register = () => {
     const history = useHistory();
 const [registerInput, setRegisterInput] = useState({
     name: '',
+    username: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -23,6 +24,7 @@ const registerSubmit = (e) => {
 
     const data = {
         name: registerInput.name,
+        username: registerInput.username,
         email: registerInput.email,
         password: registerInput.password,
         password_confirmation: registerInput.password_confirmation,
@@ -62,7 +64,7 @@ const registerSubmit = (e) => {
        <form onSubmit={registerSubmit}>
             <div className="flex flex-col mb-2">
                 <div className=" relative ">
-                    <input type="text" id="create-account-name" className=" rounded-lg border-transparent flex-1 appearance-none border
+                    <input type="text" id="create-account-name" className="rounded-lg border-transparent flex-1 appearance-none border
                     border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none
                     focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="name" onChange={handleInput} value={registerInput.name} placeholder="Name"/>
                     <span className="text-red-300 text-xs">{registerInput.error_list.name}</span>
@@ -70,8 +72,17 @@ const registerSubmit = (e) => {
                 </div>
 
                 <div className="flex flex-col mb-2">
+                <div className=" relative ">
+                    <input type="text" id="create-account-name" className="rounded-lg border-transparent flex-1 appearance-none border
+                    border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none
+                    focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="username" onChange={handleInput} value={registerInput.username} placeholder="Username"/>
+                    <span className="text-red-300 text-xs">{registerInput.error_list.username}</span>
+                    </div>
+                </div>
+
+                <div className="flex flex-col mb-2">
                     <div className=" relative ">
-                        <input type="email" name="email" id="create-account-email" className=" rounded-lg border-transparent flex-1 appearance-none
+                        <input type="email" name="email" id="create-account-email" className="rounded-lg border-transparent flex-1 appearance-none
                         border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base
                         focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" onChange={handleInput} value={registerInput.email} placeholder="Email"/>
                         <span className="text-red-300 text-xs">{registerInput.error_list.email}</span>
@@ -79,7 +90,7 @@ const registerSubmit = (e) => {
                 </div>
                 <div className="flex flex-col mb-2">
                     <div className="relative ">
-                        <input type="password" name="password" id="password" className=" rounded-lg border-transparent flex-1 appearance-none
+                        <input type="password" name="password" id="password" className="rounded-lg border-transparent flex-1 appearance-none
                         border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base
                         focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" onChange={handleInput} value={registerInput.password} placeholder="Password"/>
                         <span className="text-red-300 text-xs">{registerInput.error_list.password}</span>
