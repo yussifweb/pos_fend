@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AMS POS</string>
+    <string name="title_activity_main">AMS POS</string>
+    <string name="package_name">com.amspos.app</string>
+    <string name="custom_url_scheme">com.amspos.app</string>
+</resources>

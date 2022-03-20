@@ -1,0 +1,6 @@
+{
+	"appId": "com.amspos.app",
+	"appName": "AMS POS",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
